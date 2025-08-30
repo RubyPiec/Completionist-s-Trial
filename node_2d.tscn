@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://wisg233d5xmy"]
+
+[ext_resource type="Script" uid="uid://bo1gwirtfwjot" path="res://player.gd" id="1_0e48y"]
+[ext_resource type="Texture2D" uid="uid://djy46mrjkl6uj" path="res://icon.svg" id="2_epypp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q6r6c"]
+size = Vector2(72, 71)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kdubu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_epypp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_epypp")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_0e48y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, -3.5)
+shape = SubResource("RectangleShape2D_q6r6c")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-2, -3)
+scale = Vector2(0.5625, 0.554688)
+sprite_frames = SubResource("SpriteFrames_kdubu")
+animation = &"walk"
