@@ -1,19 +1,26 @@
-[gd_scene load_steps=5 format=3 uid="uid://da2bca0wfmmmi"]
+[gd_scene load_steps=8 format=3 uid="uid://da2bca0wfmmmi"]
 
 [ext_resource type="PackedScene" uid="uid://bkps2ejtyudgk" path="res://player.tscn" id="1_80nbo"]
+[ext_resource type="Script" uid="uid://cedcg6q2il2nl" path="res://followplayer.gd" id="2_e2o6t"]
+[ext_resource type="AudioStream" uid="uid://ctwl03emjk3qs" path="res://sound.wav" id="3_feb5d"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_80nbo"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_e2o6t"]
+[sub_resource type="Gradient" id="Gradient_feb5d"]
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.461713, 0.371763, 0.477318, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fc0e3"]
+gradient = SubResource("Gradient_feb5d")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_feb5d"]
-size = Vector2(1509.62, 150)
+size = Vector2(1510.37, 150)
 
 [node name="Game" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_80nbo")]
-position = Vector2(-24.9999, 300)
-scale = Vector2(0.7, 0.7)
+position = Vector2(47, 300)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(200, -126)
@@ -22,9 +29,18 @@ position = Vector2(200, -126)
 position = Vector2(293, 807)
 scale = Vector2(2000, 150)
 mesh = SubResource("QuadMesh_80nbo")
-texture = SubResource("PlaceholderTexture2D_e2o6t")
+texture = SubResource("GradientTexture1D_fc0e3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(293, 807)
+position = Vector2(292.501, 807)
 scale = Vector2(1.32484, 1)
 shape = SubResource("RectangleShape2D_feb5d")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 324)
+script = ExtResource("2_e2o6t")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_feb5d")
+
+[connection signal="out_of_view" from="Player" to="Camera2D" method="_on_player_out_of_view"]
