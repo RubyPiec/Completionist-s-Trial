@@ -1,13 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://bkps2ejtyudgk"]
+[gd_scene load_steps=7 format=3 uid="uid://bkps2ejtyudgk"]
 
 [ext_resource type="Script" uid="uid://bo1gwirtfwjot" path="res://player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://bu8ats5i4kuui" path="res://trophy.png" id="2_onrkg"]
+[ext_resource type="AudioStream" uid="uid://ctwl03emjk3qs" path="res://sound.wav" id="3_i3pqv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqtel"]
 size = Vector2(72, 71)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_onrkg"]
-load_path = "res://.godot/imported/tphy.png-57d4c3d18d1120f06d0d2af96f6a5539.ctex"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_sweqy"]
 animations = [{
@@ -49,3 +49,8 @@ position = Vector2(-2, -1.5)
 scale = Vector2(0.555, 0.555)
 sprite_frames = SubResource("SpriteFrames_sweqy")
 animation = &"walk"
+
+[node name="Jump" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_i3pqv")
+
+[node name="Achget" type="AudioStreamPlayer2D" parent="."]

@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://da2bca0wfmmmi"]
 
 [ext_resource type="PackedScene" uid="uid://bkps2ejtyudgk" path="res://player.tscn" id="1_80nbo"]
+[ext_resource type="Script" uid="uid://cv4rxplbkhagm" path="res://achievements.gd" id="1_feb5d"]
 [ext_resource type="Script" uid="uid://cedcg6q2il2nl" path="res://followplayer.gd" id="2_e2o6t"]
-[ext_resource type="AudioStream" uid="uid://ctwl03emjk3qs" path="res://sound.wav" id="3_feb5d"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_80nbo"]
 
@@ -18,6 +18,7 @@ gradient = SubResource("Gradient_feb5d")
 size = Vector2(1510.37, 150)
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_feb5d")
 
 [node name="Player" parent="." instance=ExtResource("1_80nbo")]
 position = Vector2(47, 300)
@@ -40,7 +41,10 @@ shape = SubResource("RectangleShape2D_feb5d")
 position = Vector2(576, 324)
 script = ExtResource("2_e2o6t")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_feb5d")
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="out_of_view" from="Player" to="Camera2D" method="_on_player_out_of_view"]

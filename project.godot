@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="Completionist's Trial"
-run/main_scene="uid://da2bca0wfmmmi"
+run/main_scene="uid://dh7djdf8t4wpv"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Achievements="*res://achievements.gd"
 
 [editor_plugins]
 

@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @onready var thecamera = $"../Camera2D"
-@onready var audio = $"../AudioStreamPlayer2D"
+@onready var audio = $"Jump"
 
 @export var playerspeed = 300
 @export var jumpheight = 650
@@ -9,7 +9,7 @@ extends CharacterBody2D
 
 signal out_of_view
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if !is_on_floor():
 		velocity.y += gravity
 		if velocity.y > 1000:

@@ -1,0 +1,83 @@
+[gd_scene load_steps=10 format=3 uid="uid://dh7djdf8t4wpv"]
+
+[ext_resource type="PackedScene" uid="uid://bkps2ejtyudgk" path="res://player.tscn" id="1_06t4h"]
+[ext_resource type="Script" uid="uid://cedcg6q2il2nl" path="res://followplayer.gd" id="2_7vrkn"]
+[ext_resource type="Texture2D" uid="uid://dpcqea1eaamk5" path="res://completionistlogo.png" id="3_fu7sn"]
+[ext_resource type="Script" uid="uid://dqplttyf6mbux" path="res://play.gd" id="3_jix8l"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_7vrkn"]
+
+[sub_resource type="Gradient" id="Gradient_feb5d"]
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.461713, 0.371763, 0.477318, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fu7sn"]
+gradient = SubResource("Gradient_feb5d")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jix8l"]
+size = Vector2(1510.37, 150)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_glbon"]
+size = Vector2(387.404, 651)
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("3_jix8l")
+
+[node name="Player" parent="." instance=ExtResource("1_06t4h")]
+position = Vector2(41, 571)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 324)
+script = ExtResource("2_7vrkn")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(200, -126)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="StaticBody2D"]
+position = Vector2(293, 807)
+scale = Vector2(2000, 150)
+mesh = SubResource("QuadMesh_7vrkn")
+texture = SubResource("GradientTexture1D_fu7sn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(292.501, 807)
+scale = Vector2(1.32484, 1)
+shape = SubResource("RectangleShape2D_jix8l")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+size_flags_horizontal = 0
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -92.5
+offset_top = -46.5
+offset_right = 92.5
+offset_bottom = 46.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Play"
+
+[node name="Sprite2D" type="Sprite2D" parent="Control"]
+position = Vector2(576, 136)
+scale = Vector2(2, 2)
+texture = ExtResource("3_fu7sn")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(200, -126)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(-456, 407)
+scale = Vector2(1.32484, 1)
+shape = SubResource("RectangleShape2D_glbon")
+
+[connection signal="button_down" from="Control/Button" to="." method="_on_button_button_down"]
