@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bkps2ejtyudgk"]
+[gd_scene load_steps=8 format=3 uid="uid://bkps2ejtyudgk"]
 
 [ext_resource type="Script" uid="uid://bo1gwirtfwjot" path="res://player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://bu8ats5i4kuui" path="res://trophy.png" id="2_onrkg"]
 [ext_resource type="AudioStream" uid="uid://ctwl03emjk3qs" path="res://sound.wav" id="3_i3pqv"]
+[ext_resource type="AudioStream" uid="uid://b462iafxn8brs" path="res://achget.wav" id="4_hqtel"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqtel"]
 size = Vector2(72, 71)
@@ -36,7 +37,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="CharacterBody2D" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_onrkg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -52,5 +53,8 @@ animation = &"walk"
 
 [node name="Jump" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_i3pqv")
+panning_strength = 0.0
 
 [node name="Achget" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_hqtel")
+panning_strength = 0.0

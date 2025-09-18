@@ -7,32 +7,78 @@ extends CharacterBody2D
 @export var jumpheight = 650
 @export var gravity = 25
 
+var jumpsinrow = 0
+var sidestepsinrow = 0
+var konami = 0
 signal out_of_view
 
 func _physics_process(_delta):
-	if !is_on_floor():
-		velocity.y += gravity
-		if velocity.y > 1000:
-			velocity.y = 1000
-			
-	if Input.is_action_pressed("jump"):
-		if is_on_floor():
-			audio.play()
-			velocity.y = -jumpheight
-	
-	var horizontal_direction = Input.get_axis("move_left","move_right")
-	
-	if(position.x<(thecamera.position.x-576-64*0.7*0.555)):
-		emit_signal("out_of_view", position)
-	if(position.x>(thecamera.position.x+576+64*0.7*0.555)):
-		emit_signal("out_of_view", position)
-	if(position.y>(thecamera.position.y+324+64*0.7*0.555)):
-		emit_signal("out_of_view", position)
-	if(position.y>(thecamera.position.y-324-64*0.7*0.555)):
-		emit_signal("out_of_view", position)
+	if(get_tree().current_scene.name=="Game"):
+		Achievements.getAch("welcome")
+		if !is_on_floor():
+			velocity.y += gravity
+			if velocity.y > 1000:
+				velocity.y = 1000
+				
+		if Input.is_action_pressed("jump"):
+			Achievements.getAch("jump")
+			if is_on_floor():
+				sidestepsinrow=0
+				jumpsinrow = jumpsinrow+1
+				if(jumpsinrow>=5):
+					Achievements.getAch("excited")
+				audio.play()
+				velocity.y = -jumpheight
 		
-	velocity.x = playerspeed*horizontal_direction
-	move_and_slide()
+		if Input.is_action_just_pressed("jump"):
+			if(konami<=1):
+				konami+=1
+			else:
+				konami=0
+				
+		if Input.is_action_just_pressed("down"):
+			if(konami==2||konami==3):
+				konami+=1
+			else:
+				konami=0
+			Achievements.getAch("notworking")
+			
+		if Input.is_action_just_pressed("move_left"):
+			if(konami==4||konami==6):
+				konami+=1
+			else:
+				konami=0
+			Achievements.getAch("left")
+			sidestepsinrow = sidestepsinrow+1
+			if(sidestepsinrow>=5):
+				Achievements.getAch("hold")
+			jumpsinrow=0
+		if Input.is_action_just_pressed("move_right"):
+			if(konami==5||konami==7):
+				konami+=1
+				if(konami==8):
+					Achievements.getAch("konami")
+			else:
+				konami=0
+			Achievements.getAch("right")
+			sidestepsinrow = sidestepsinrow+1
+			if(sidestepsinrow>=5):
+				Achievements.getAch("hold")
+			jumpsinrow=0
+			
+		var horizontal_direction = Input.get_axis("move_left","move_right")
+		
+		if(position.x<(thecamera.position.x-576-64*0.7*0.555)):
+			emit_signal("out_of_view", position)
+		if(position.x>(thecamera.position.x+576+64*0.7*0.555)):
+			emit_signal("out_of_view", position)
+		if(position.y>(thecamera.position.y+324+64*0.7*0.555)):
+			emit_signal("out_of_view", position)
+		if(position.y<(thecamera.position.y-324-64*0.7*0.555)):
+			emit_signal("out_of_view", position)
+			
+		velocity.x = playerspeed*horizontal_direction
+		move_and_slide()
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
