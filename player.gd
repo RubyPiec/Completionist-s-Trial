@@ -82,5 +82,18 @@ func _physics_process(_delta):
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
-func get_animated_sprite_2d_size() -> Vector2:
-	return animated_sprite_2d.sprite_frames.get_frame_texture(animated_sprite_2d.animation, animated_sprite_2d.frame).get_size()
+
+func _on_ceilings_area_entered(_area: Area2D) -> void: #this all looks ugly but oh well
+	Achievements.getAch("ceiling")
+
+func _on_area_2d_area_entered(_area: Area2D) -> void:
+	Achievements.getAch("leftwall")
+
+func _on_achievement_list_hider_area_entered(_area: Area2D) -> void:
+	Achievements.getAch("myachievements")
+	for ach in get_tree().current_scene.get_node("Camera2D/ScrollContainer/VBoxContainer").get_children():
+		ach.color.a=0.2
+		
+func _on_achievement_list_hider_area_exited(_area: Area2D) -> void:
+	for ach in get_tree().current_scene.get_node("Camera2D/ScrollContainer/VBoxContainer").get_children():
+		ach.color.a=1
