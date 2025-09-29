@@ -3,6 +3,10 @@ extends CharacterBody2D
 @onready var thecamera = $"../Camera2D"
 @onready var audio = $"Jump"
 
+
+@onready var inHouse = false
+@onready var timeInHouse = 0
+
 @export var playerspeed = 300
 @export var jumpheight = 650
 @export var gravity = 25
@@ -12,7 +16,13 @@ var sidestepsinrow = 0
 var konami = 0
 signal out_of_view
 
-func _physics_process(_delta):
+func _physics_process(delta):
+	if inHouse:
+		timeInHouse=timeInHouse+delta
+		if timeInHouse > 5:
+			Achievements.getAch("enjoyment")
+	else:
+		timeInHouse=0
 	if(get_tree().current_scene.name=="Game"):
 		Achievements.getAch("welcome")
 		if !is_on_floor():
@@ -20,7 +30,10 @@ func _physics_process(_delta):
 			if velocity.y > 1000:
 				velocity.y = 1000
 				
-		if Input.is_action_pressed("jump"):
+		if Input.is_action_pressed("jump"): #Down is optional
+			if Input.is_action_pressed("move_left"):
+				if Input.is_action_pressed("move_right"):
+					Achievements.getAch("screenshot")
 			Achievements.getAch("jump")
 			if is_on_floor():
 				sidestepsinrow=0
@@ -82,7 +95,6 @@ func _physics_process(_delta):
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
-
 func _on_ceilings_area_entered(_area: Area2D) -> void: #this all looks ugly but oh well
 	Achievements.getAch("ceiling")
 
@@ -97,3 +109,10 @@ func _on_achievement_list_hider_area_entered(_area: Area2D) -> void:
 func _on_achievement_list_hider_area_exited(_area: Area2D) -> void:
 	for ach in get_tree().current_scene.get_node("Camera2D/ScrollContainer/VBoxContainer").get_children():
 		ach.color.a=1
+
+func _on_house_area_entered(area: Area2D) -> void:
+	Achievements.getAch("homesweethome")
+	inHouse = true
+
+func _on_house_area_exited(area: Area2D) -> void:
+	inHouse = false

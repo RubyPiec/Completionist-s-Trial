@@ -7,6 +7,7 @@ var achievements = {
 	"excited": ["Excited?", "Jump 5 times in a row", false],
 	"right": ["Right is always right!", "Go right", false],
 	"left": ["Time to leave", "Go left", false],
+	"screenshot": ["Screenshot taken", "Hit every key at once", false],
 	"hold": ["You can hold...", "Hit left or right 5 times in a row", false],
 	"notworking": ["That won't work...", "Try to go down", false],
 	"clicker": ["Ow!", "Click the player", false],
@@ -14,6 +15,8 @@ var achievements = {
 	"ceiling": ["My head!", "Hit a ceiling", false],
 	"changescreen": ["Ooh, what's here?", "Go to a different screen", false],
 	"leftwall": ["The farlands", "Touch the left wall", false],
+	"homesweethome": ["Home Sweet Home", "Enter your house", false],
+	"enjoyment": ["Truly my home", "Stay in your house for 5 seconds", false],
 	"myachievements": ["Fading achievements", "Touch the achievement list", false],
 	"konami": ["+30 Lives!", "You already had infinite...", false]
 }
