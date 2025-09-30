@@ -1,5 +1,6 @@
 extends Node2D
 
+var achievementCount = 0
 # ID: [Name, Description, Obtained]
 var achievements = {
 	"welcome": ["Welcome!", "Hit the 'Play' button", false],
@@ -10,6 +11,7 @@ var achievements = {
 	"screenshot": ["Screenshot taken", "Hit every key at once", false],
 	"hold": ["You can hold...", "Hit left or right 5 times in a row", false],
 	"notworking": ["That won't work...", "Try to go down", false],
+	"morecontent": ["More content?!", "Enter floor 2", false],
 	"clicker": ["Ow!", "Click the player", false],
 	"stop": ["Stop that!", "Click the player 5 times", false],
 	"ceiling": ["My head!", "Hit a ceiling", false],
@@ -18,6 +20,14 @@ var achievements = {
 	"homesweethome": ["Home Sweet Home", "Enter your house", false],
 	"enjoyment": ["Truly my home", "Stay in your house for 5 seconds", false],
 	"myachievements": ["Fading achievements", "Touch the achievement list", false],
+	"wrongway": ["Wrong way!", "Go the wrong way on floor 2", false],
+	"death": ["My demise...", "Die.", false],
+	"retry": ["Try again and again", "Die 10 times", false],
+	"viciousloop": ["Vicious cycle", "Die 25 times", false],
+	"physics": ["Defying physics", "Jump in mid-air", false],
+	"tenachs": ["Ten achievements?!", "Get 10 achievements", false],
+	"twentyachs": ["Twenty already?!", "Have 20 achievements", false],
+	"secret": ["Secret tunnel!", "Find and enter the secret area", false],
 	"konami": ["+30 Lives!", "You already had infinite...", false]
 }
 
@@ -26,6 +36,11 @@ func getAch(code):
 		var achget = get_tree().get_first_node_in_group("Player").find_child("Achget")
 		achievements[code][2]=true
 		achget.play()
+		achievementCount+=1
+		if(achievementCount==10):
+			getAch("tenachs")
+		if(achievementCount==20):
+			getAch("twentyachs")
 		if(get_tree().current_scene.name=="Game"):
 			var justGotAch = get_tree().current_scene.get_node("Camera2D/ScrollContainer/VBoxContainer/"+code)
 			var hhhh = justGotAch.duplicate() #what do i name this variable even

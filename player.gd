@@ -14,9 +14,26 @@ extends CharacterBody2D
 var jumpsinrow = 0
 var sidestepsinrow = 0
 var konami = 0
+var deaths = 0
+var deathcd = 0
 signal out_of_view
 
+func die():
+	self.position.x=47
+	self.position.y=300
+	if Input.is_action_pressed("jump"):
+		Achievements.getAch("physics") #this is just how im hardcoding it
+	if deathcd <= 0:
+		deathcd = 0.5
+		deaths += 1
+		Achievements.getAch("death")
+		if deaths==10:
+			Achievements.getAch("retry")
+		if deaths==25:
+			Achievements.getAch("viciousloop")
+	
 func _physics_process(delta):
+	deathcd -= delta
 	if inHouse:
 		timeInHouse=timeInHouse+delta
 		if timeInHouse > 5:
@@ -91,9 +108,19 @@ func _physics_process(delta):
 			emit_signal("out_of_view", position)
 			
 		velocity.x = playerspeed*horizontal_direction
+		
 		move_and_slide()
+		
+		for i in get_slide_collision_count():
+			var collision = get_slide_collision(i)
+			var collider = collision.get_collider()
+			
+			if collider==$"../extratiles":
+				die() # cant make only spikes kill you... grr
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+
+
 
 func _on_ceilings_area_entered(_area: Area2D) -> void: #this all looks ugly but oh well
 	Achievements.getAch("ceiling")
@@ -116,3 +143,12 @@ func _on_house_area_entered(area: Area2D) -> void:
 
 func _on_house_area_exited(area: Area2D) -> void:
 	inHouse = false
+
+func _on_secret_area_entered(area: Area2D) -> void:
+	Achievements.getAch("secret")
+
+func _on_floor_2_area_entered(area: Area2D) -> void:
+	Achievements.getAch("morecontent")
+
+func _on_wrongway_area_entered(area: Area2D) -> void:
+	Achievements.getAch("wrongway")
